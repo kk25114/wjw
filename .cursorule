@@ -1,0 +1,80 @@
+{
+  "language": "markdown",
+  "rules": [
+    {
+      "name": "SQL Block",
+      "prefix": "sql",
+      "body": [
+        "```sql",
+        "$0",
+        "```"
+      ]
+    },
+    {
+      "name": "Bash Script",
+      "prefix": "bash",
+      "body": [
+        "```bash",
+        "$0",
+        "```"
+      ]
+    },
+    {
+      "name": "Table Header",
+      "prefix": "table",
+      "body": [
+        "<div style=\"overflow-x: auto;\">",
+        "",
+        "| 字段名 | 类型 | 说明 | 备注 |",
+        "|:-------|:-----|:-----|:-----|",
+        "| $0 | | | |",
+        "",
+        "</div>"
+      ]
+    },
+    {
+      "name": "Long Table Header",
+      "prefix": "ltable",
+      "body": [
+        "<div style=\"overflow-x: auto;\">",
+        "",
+        "| 字段名<br/>(20字符) | 类型<br/>(20字符) | 说明<br/>(最长200字符) | 备注<br/>(50字符) |",
+        "|:----------------|:--------------|:------------------|:-------------|",
+        "| $0 | | | |",
+        "",
+        "</div>"
+      ]
+    },
+    {
+      "name": "Code Block",
+      "prefix": "code",
+      "body": [
+        "```$1",
+        "$0",
+        "```"
+      ]
+    },
+    {
+      "name": "Title Level 1",
+      "prefix": "h1",
+      "body": [
+        "# $0"
+      ]
+    },
+    {
+      "name": "Title Level 2",
+      "prefix": "h2",
+      "body": [
+        "## $0"
+      ]
+    },
+    {
+      "name": "Note Block",
+      "prefix": "note",
+      "body": [
+        "> **注意：**",
+        "> $0"
+      ]
+    }
+  ]
+} 
