@@ -1,0 +1,182 @@
+# Hive建表语句
+wjw_wk,wjw_hk卫考，护考两个库
+
+## 1. 报名表```sql
+create table dw_kw_bmk_t (
+  ksid string comment '考生编号',
+  name string comment '姓名',
+  dah string comment '档案号',
+  xb_old string comment '性别（旧）',
+  mz_old string comment '民族（旧）',
+  xl_old string comment '学历（旧）',
+  xw_old string comment '学位（旧）',
+  byzy_old string comment '毕业专业（旧）',
+  sr string comment '生日',
+  xzqy_old string comment '行政区域（旧）',
+  ssdm_old string comment '省编码（旧）',
+  sqdm_old string comment '市编码（旧）',
+  qxdm_old string comment '区县编码（旧）',
+  dwmc_old string comment '单位名称（旧）',
+  dwss_old string comment '单位所属（旧）',
+  dwxz_old string comment '单位性质（旧）',
+  gznx_old string comment '工作年限（旧）',
+  ksh string comment '考生准考证号',
+  zjlx_old string comment '考生证件类型（旧）',
+  zjh string comment '考生证件号码',
+  xyjszg_old string comment '现有技术资格（旧）',
+  kslx_old string comment '考生类型（旧）',
+  jgjb_old string comment '机构级别（旧）',
+  xb string comment '性别',
+  mz string comment '民族',
+  xl string comment '学历',
+  xw string comment '学位',
+  byzy string comment '毕业专业',
+  xzqy string comment '行政区域业务标准编码',
+  ssdm string comment '省编码业务标准编码',
+  sqdm string comment '市编码业务标准编码',
+  qxdm string comment '区县编码业务标准编码',
+  dwmc string comment '单位名称',
+  dwss string comment '单位所属',
+  dwxz string comment '单位性质',
+  zjlx string comment '考生证件类型',
+  xyjszg string comment '现有技术资格',
+  kslx string comment '考生类型',
+  jgjb string comment '机构级别',
+  xzqy_gb string comment '行政区域国家标准编码',
+  ssdm_gb string comment '省编码国家标准编码',
+  sqdm_gb string comment '市编码国家标准编码',
+  qxdm_gb string comment '区县编码国家标准编码',
+  gznx string comment '工作年限'
+)
+comment '报名表'
+partitioned by (
+  ymonth string comment '年分区字段'
+)
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
+
+## 2. 一人一卷表
+create table DW_PF_YRYJ_SOCRE_T (
+  ksh string comment '考生准考证号',
+  ksdfd string comment '考生实际得分点',
+  mdfd string comment '满得分点',
+  ksdzdf string comment '考生得分',
+  answer_id string comment '答案编号',
+  qk string comment '缺考标志',
+  sjid string comment '试卷编号',
+  sjdm string comment '试卷编码',
+  sjname string comment '试卷名称',
+  jb_old string comment '级别（旧）',
+  jbname string comment '级别名称',
+  zyid string comment '专业编号',
+  zycdm string comment '专业编码',
+  zydm_old string comment '专业标准编码（旧）',
+  zyname string comment '专业名称',
+  kmid string comment '科目编号',
+  kmcdm string comment '科目编码',
+  kmdm_old string comment '科目标准编码（旧）',
+  kmname string comment '科目名称',
+  tg string comment '是否通过',
+  mf string comment '试卷满分',
+  jb string comment '级别',
+  zydm string comment '专业标准编码',
+  kmdm string comment '科目标准编码',
+  ksdf string comment '考生得分',
+  jbcdm string comment '报考级别长代码'
+)
+comment '一人一卷表'
+partitioned by (
+  ymonth string
+)
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
+
+## 3. 双向细目表
+create table DW_TK_SXXMB_T (
+  jb_old string comment '级别（旧）',
+  jbname string comment '级别名称',
+  sjid string comment '试卷编号',
+  sjdm string comment '试卷编码',
+  sjname string comment '试卷名称',
+  zyid string comment '专业编号',
+  zydm_old string comment '专业标准编码',
+  zyname string comment '专业名称',
+  kmid string comment '科目编号',
+  kmdm_old string comment '科目标准编码',
+  kmname string comment '科目名称',
+  questions_id string comment '题号关联主键',
+  code string comment '试题编码',
+  parent_id string comment '父级编号',
+  questiontype string comment '题型',
+  display_code string comment '题号（含大题）',
+  display_order string comment '题目排序',
+  sanswer string comment '标准答案',
+  mdfd string comment '满得分点',
+  speciality_id string comment '专业编号',
+  zsdid string comment '知识点编号',
+  tkzyname string comment '专业名称',
+  zsd string comment '知识点名称',
+  jbfl string comment '疾病分类',
+  zsmk string comment '知识模块',
+  zydm string comment '专业标准编码',
+  kmdm string comment '科目标准编码',
+  jb string comment '级别',
+  zsmkname string comment '知识模块名称',
+  jbflname string comment '疾病模块名称',
+  all_options string comment '选项'
+)
+comment '双向细目表'
+partitioned by (
+  ymonth string
+)
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
+
+## 4. 一人一题表
+create table ods_pf_answerscore_t (
+  answerscore_id string comment '题目编号',
+  examineeno string comment '考生准考证号',
+  paper_id string comment '试卷编号',
+  questions_id string comment '试题编号',
+  answer_id string comment '答案编号',
+  questionpoint decimal(7,2) comment '得分信息',
+  score decimal(7,2) comment '得分值',
+  selectinfo string comment '答题信息',
+  project_id bigint comment '项目编号',
+  addt string comment '操作时间'
+)
+comment '一人一题表'
+partitioned by (
+  ymonth string
+)
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
+
+
+## 5. 维度编码表
+create table m_dimension_type_t (
+  name string comment '维度类型名称',
+  code string comment '维度类型编码'
+)
+comment '维度编码表'
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
+
+## 6. 维度表 
+create table m_dimension_t (
+  code_type string comment '维度类型',
+  name string comment '维度名称', 
+  code string comment '维度编码',
+  long_code string comment '维度长编码',
+  new_name string comment '维度新名称',
+  new_code string comment '维度新编码',
+  new_long_code string comment '维度新长编码',
+  sort int comment '排序',
+  parent_code string comment '父编码'
+)
+comment '维度表'
+partitioned by (
+  ymonth string
+)
+stored as parquet
+tblproperties ('parquet.compress'='snappy');
